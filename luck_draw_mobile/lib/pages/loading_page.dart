@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'file:///D:/Projects/LuckyDrawGamingService/luck_draw_mobile/lib/pages/register_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'constants.dart';
+import '../services/constants.dart';
 
 class LoadingPage extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _LoadingPageState extends State<LoadingPage> {
     }
     else{
       Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context)=>Container()
+        builder: (context)=>InitialPage()
       ));
     }
   }
@@ -28,7 +29,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState(){
     super.initState();
-    // _checkLogin();
+    _checkLogin();
   }
 
   @override

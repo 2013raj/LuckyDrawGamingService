@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'constants.dart';
-import 'loading_page.dart';
+import 'services/constants.dart';
+import 'pages/loading_page.dart';
 
 void main() {
   runApp(MyApp());
