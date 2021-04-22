@@ -1,5 +1,7 @@
 # LuckyDrawGamingService
 
+![](images/flow_diagram.png)
+
 API ENDPOINT: https://lucky-draw-gaming-service.herokuapp.com/
 
 The backend API service which is built using Spring Boot in Java provides the following method calls:
@@ -14,3 +16,15 @@ The backend API service which is built using Spring Boot in Java provides the fo
 | GET | /events | Gets event details for past and upcoming week |
 
 ### Example
+
+Register User             |  Response
+:-------------------------:|:-------------------------:
+![](images/ss1.png)  |  ![](images/ss2.png)
+
+Participate In Lucky Draw Event            |  Response
+:-------------------------:|:-------------------------:
+![](images/ss3.png)  |  ![](images/ss4.png)
+
+Compute Winner [ADMIN-ONLY]           |  Response
+:-------------------------:|:-------------------------:
+![](images/ss5.png)  |  ![](images/ss6.png)
