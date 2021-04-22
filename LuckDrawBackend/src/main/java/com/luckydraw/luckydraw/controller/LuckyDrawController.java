@@ -1,10 +1,8 @@
 package com.luckydraw.luckydraw.controller;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +51,10 @@ public class LuckyDrawController {
 		return firebaseService.fetchEvents();
 	}
 	
+	@PostMapping("/computeWinner")
+	public ResponseEntity<HashMap<String,String>> computeWinner(@RequestBody HashMap<String,String> map) throws InterruptedException, ExecutionException {
+		return firebaseService.computeWinner(map);
+	}
 	
 	
 	

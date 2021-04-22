@@ -2,9 +2,11 @@ package com.luckydraw.luckydraw.services;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,19 @@ public class FirebaseService {
 	private boolean validateUserId(String userId) {
 		Firestore dbFirestore = FirestoreClient.getFirestore();
 		DocumentReference docRef = dbFirestore.collection("users").document(userId);
+		try {
+			return docRef.get().get().exists();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	private boolean validateEventId(String eventId) {
+		Firestore dbFirestore = FirestoreClient.getFirestore();
+		DocumentReference docRef = dbFirestore.collection("events").document(eventId);
 		try {
 			return docRef.get().get().exists();
 		} catch (InterruptedException e) {
@@ -199,36 +214,88 @@ public class FirebaseService {
 		return new ResponseEntity<>(responseObj,HttpStatus.OK);
 	}
 	
-	/// Gets winners of all events in the last one week
-		public ResponseEntity<HashMap<String,Object>> fetchEvents() throws InterruptedException, ExecutionException{
-			HashMap<String,Object> responseObj = new HashMap<String,Object>();
-			Firestore dbFirestore = FirestoreClient.getFirestore();
-			LocalDate myDateObj = LocalDate.now();
+	/// Gets event details for past and upcoming week
+	public ResponseEntity<HashMap<String,Object>> fetchEvents() throws InterruptedException, ExecutionException{
+		HashMap<String,Object> responseObj = new HashMap<String,Object>();
+		Firestore dbFirestore = FirestoreClient.getFirestore();
+		LocalDate myDateObj = LocalDate.now();
+		
+		// events for past and upcoming week
+		for(int i=-7;i<7;i++) {
+			String incrementedDate = LocalDate.parse(myDateObj.toString()).plusDays(i).toString();
+			DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+			String formattedDate = LocalDate.parse(incrementedDate).format(myFormatObj);
 			
-			// events for past and upcoming week
-			for(int i=-7;i<7;i++) {
-				String incrementedDate = LocalDate.parse(myDateObj.toString()).plusDays(i).toString();
-				DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-				String formattedDate = LocalDate.parse(incrementedDate).format(myFormatObj);
+			Event event;
+			try {
+				ApiFuture<QuerySnapshot> future= dbFirestore.collection("events").whereEqualTo("date", formattedDate).get();
+				List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+				DocumentSnapshot document = documents.get(0);
 				
-				Event event;
-				try {
-					ApiFuture<QuerySnapshot> future= dbFirestore.collection("events").whereEqualTo("date", formattedDate).get();
-					List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-					DocumentSnapshot document = documents.get(0);
-					
-					Map<String, Object> res = document.getData();
- 					event = new Event(res.get("eid").toString(),
- 							res.get("date").toString(),res.get("time").toString(),
- 							res.get("prize").toString(),res.get("winner").toString());
-					responseObj.put(document.getId(), event);
-				}
-				catch(Exception e) {
-					e.printStackTrace();
-				}
+				Map<String, Object> res = document.getData();
+				event = new Event(res.get("eid").toString(),
+						res.get("date").toString(),res.get("time").toString(),
+						res.get("prize").toString(),res.get("winner").toString());
+				responseObj.put(document.getId(), event);
 			}
-			return new ResponseEntity<>(responseObj,HttpStatus.OK);
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
+		return new ResponseEntity<>(responseObj,HttpStatus.OK);
+	}
 	
+	
+	public ResponseEntity<HashMap<String,String>> computeWinner(HashMap<String,String> map) throws InterruptedException, ExecutionException {
+		Firestore dbFirestore = FirestoreClient.getFirestore();
+		HashMap<String,String> responseObj = new HashMap<String,String>();
+		
+		String key = map.get("key");
+		String eventId = map.get("eid");
+		
+		//TODO:Validate Admin-Key
+		
+		if(!this.validateEventId(eventId)) {
+			responseObj.put("text","Invalid Event ID");
+			return new ResponseEntity<>(responseObj,HttpStatus.NOT_FOUND);
+		}
+		
+		List<String> participantsId = new ArrayList<String>();  
+		
+		try {
+			ApiFuture<QuerySnapshot> future = dbFirestore.collection("events").
+					document(eventId).collection("participated").get();
+			List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+			for (QueryDocumentSnapshot document : documents) {
+			  participantsId.add(document.getId());
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(participantsId.size()==0) {
+			responseObj.put("text","No Participants found for this event");
+			return new ResponseEntity<>(responseObj,HttpStatus.NOT_FOUND);
+		}
+		
+		// Randomly select one ID from the list to compute winner
+		Random randomizer = new Random();
+		String winnerId= participantsId.get(randomizer.nextInt(participantsId.size()));
+		String winnerName = this.getUserName(winnerId);
+		
+		// Save winner ID for the event
+		Map<String,Object> m = new HashMap<String,Object>();
+		m.put("winner",winnerId);
+		dbFirestore.collection("events").document(eventId).update(m);
+		
+		
+		responseObj.put("winnerId", winnerId);
+		responseObj.put("winnerName", winnerName);
+		responseObj.put("eid",eventId);
+		responseObj.put("text","Congratulations!");
+		return new ResponseEntity<>(responseObj,HttpStatus.OK);
+	}
+		
 	
 }
