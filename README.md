@@ -2,7 +2,8 @@
 
 ![](images/flow_diagram.png)
 
-API ENDPOINT: https://lucky-draw-gaming-service.herokuapp.com/
+## API ENDPOINT
+https://lucky-draw-gaming-service.herokuapp.com/
 
 The backend API service which is built using Spring Boot in Java provides the following method calls:
 
@@ -15,7 +16,7 @@ The backend API service which is built using Spring Boot in Java provides the fo
 | POST | /winner | Computes Winners for an event [Access only to admin through ADMIN_KEYS] |
 | GET | /events | Gets event details for past and upcoming week |
 
-### Sample Requests
+## Sample Requests
 Some common abreviations used:
 
 
@@ -25,7 +26,7 @@ Some common abreviations used:
 
 - rid: Raffle-Ticket ID
 
-*Can be generated using GET method*
+*Can be generated using GET method on raffle-ticket*
 
 - eid: Event ID 
 
