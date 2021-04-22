@@ -12,53 +12,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.luckydraw.luckydraw.entities.RaffleTicket;
 import com.luckydraw.luckydraw.entities.User;
-import com.luckydraw.luckydraw.services.FirebaseService;
+import com.luckydraw.luckydraw.services.LuckyDrawService;
 
 @RestController
 public class LuckyDrawController {
 	
 	@Autowired 
-	FirebaseService firebaseService;
+	LuckyDrawService luckyDrawService;
 	
 	@GetMapping("/")
-	public String check(){
-//		return firebaseService.populateEventsTable();
+	public String connectionCheck(){
+//		return luckyDrawService.populateEventsTable();
 		return "Welcome to Lucky Draw Gaming Service";
 	}
 	
 	@PostMapping("/register")
 	public ResponseEntity<HashMap<String,String>> registerUser(@RequestBody User user) {
-		return firebaseService.registerNewUser(user);
+		return luckyDrawService.registerNewUser(user);
 	}
 	
 	@GetMapping("/raffle-ticket/{userId}")
 	public ResponseEntity<HashMap<String,String>> generateRaffleTicket(@PathVariable String userId) {
-		return firebaseService.generateRaffleTicket(userId);
+		return luckyDrawService.generateRaffleTicket(userId);
 	}
 	
 	@PostMapping("/participate")
-	public ResponseEntity<HashMap<String,String>> participateInEvent(@RequestBody RaffleTicket raffleTicket) {
-		return firebaseService.participateInEvent(raffleTicket);
+	public ResponseEntity<HashMap<String,String>> participateInEvent(@RequestBody RaffleTicket raffleTicket) throws InterruptedException, ExecutionException {
+		return luckyDrawService.participateInEvent(raffleTicket);
 	}
 	
 	@GetMapping("/winners")
 	public ResponseEntity<HashMap<String,String>> getWinnersList() throws InterruptedException, ExecutionException{
-		return firebaseService.fetchWinners();
+		return luckyDrawService.fetchWinners();
 	}
 	
 	@GetMapping("/events")
 	public ResponseEntity<HashMap<String,Object>> getEvents() throws InterruptedException, ExecutionException{
-		return firebaseService.fetchEvents();
+		return luckyDrawService.fetchEvents();
 	}
 	
-	@PostMapping("/computeWinner")
+	@PostMapping("/winner")
 	public ResponseEntity<HashMap<String,String>> computeWinner(@RequestBody HashMap<String,String> map) throws InterruptedException, ExecutionException {
-		return firebaseService.computeWinner(map);
+		return luckyDrawService.computeWinner(map);
 	}
-	
-	
-	
-	
-
 	
 }

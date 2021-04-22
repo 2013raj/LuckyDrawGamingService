@@ -13,6 +13,14 @@ public class RaffleTicket {
 		this.rid = rid;
 		this.participated = false;
 	}
+	
+	public RaffleTicket(String uid,String eid,String rid, boolean participated) {
+		super();
+		this.uid = uid;
+		this.eid = eid;
+		this.rid = rid;
+		this.participated = participated;
+	}
 
 	public RaffleTicket() {
 		super();
