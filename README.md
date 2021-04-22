@@ -3,7 +3,7 @@
 ![](images/flow_diagram.png)
 
 ## API ENDPOINT
-https://lucky-draw-gaming-service.herokuapp.com/
+**Base URL:** https://lucky-draw-gaming-service.herokuapp.com/
 
 The backend API service which is built using Spring Boot in Java provides the following method calls:
 
