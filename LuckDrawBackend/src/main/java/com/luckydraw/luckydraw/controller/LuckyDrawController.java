@@ -1,10 +1,11 @@
 package com.luckydraw.luckydraw.controller;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,32 +22,41 @@ public class LuckyDrawController {
 	@Autowired 
 	FirebaseService firebaseService;
 	
-	@GetMapping("/home")
-	public String home(HttpServletRequest request) throws InterruptedException, ExecutionException {
-		String path = request.getRequestURI();
-		String items[] = path.split("/");
-		return "HOME SWEET HOME";
-	}
-	
 	@GetMapping("/")
 	public String check(){
-		return "API Working Fine";
+//		return firebaseService.populateEventsTable();
+		return "Welcome to Lucky Draw Gaming Service";
 	}
 	
 	@PostMapping("/register")
-	public String registerUser(@RequestBody User user) {
+	public ResponseEntity<HashMap<String,String>> registerUser(@RequestBody User user) {
 		return firebaseService.registerNewUser(user);
 	}
 	
 	@GetMapping("/raffle-ticket/{userId}")
-	public String generateRaffleTicket(@PathVariable String userId) {
+	public ResponseEntity<HashMap<String,String>> generateRaffleTicket(@PathVariable String userId) {
 		return firebaseService.generateRaffleTicket(userId);
 	}
 	
 	@PostMapping("/participate")
-	public String participateInEvent(@RequestBody RaffleTicket raffleTicket) {
+	public ResponseEntity<HashMap<String,String>> participateInEvent(@RequestBody RaffleTicket raffleTicket) {
 		return firebaseService.participateInEvent(raffleTicket);
 	}
 	
+	@GetMapping("/winners")
+	public ResponseEntity<HashMap<String,String>> getWinnersList() throws InterruptedException, ExecutionException{
+		return firebaseService.fetchWinners();
+	}
+	
+	@GetMapping("/events")
+	public ResponseEntity<HashMap<String,Object>> getEvents() throws InterruptedException, ExecutionException{
+		return firebaseService.fetchEvents();
+	}
+	
+	
+	
+	
+	
+
 	
 }

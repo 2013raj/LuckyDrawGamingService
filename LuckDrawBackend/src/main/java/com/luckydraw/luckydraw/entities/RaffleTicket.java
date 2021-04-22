@@ -4,24 +4,7 @@ public class RaffleTicket {
 	String uid;
 	String eid;
 	String rid;
-
-	public RaffleTicket(String uid, String eid, String rid, boolean participated) {
-		super();
-		this.uid = uid;
-		this.eid = eid;
-		this.rid = rid;
-		this.participated = participated;
-	}
-
-	public String getRid() {
-		return rid;
-	}
-
-	public void setRid(String rid) {
-		this.rid = rid;
-	}
-
-	boolean participated = false;
+	boolean participated;
 	
 	// This constructor is called when rid is generated
 	public RaffleTicket(String rid,String uid) {
@@ -39,6 +22,14 @@ public class RaffleTicket {
 	@Override
 	public String toString() {
 		return "RaffleTicket [uid=" + uid + ", eid=" + eid + ", participated=" + participated + "]";
+	}
+	
+	public String getRid() {
+		return rid;
+	}
+
+	public void setRid(String rid) {
+		this.rid = rid;
 	}
 
 	public String getUid() {
