@@ -1,4 +1,4 @@
-# LuckyDrawGamingService
+# Lucky Draw Gaming Service
 
 ![](images/flow_diagram.png)
 
@@ -15,7 +15,22 @@ The backend API service which is built using Spring Boot in Java provides the fo
 | POST | /winner | Computes Winners for an event [Access only to admin through ADMIN_KEYS] |
 | GET | /events | Gets event details for past and upcoming week |
 
-### Example
+### Sample Requests
+Some common abreviations used:
+
+
+- uid: User ID
+
+*Can be generated after user registration*
+
+- rid: Raffle-Ticket ID
+
+*Can be generated using GET method*
+
+- eid: Event ID 
+
+*Can be checked using GET method on events*
+
 
 Register User             |  Response
 :-------------------------:|:-------------------------:
