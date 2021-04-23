@@ -41,9 +41,8 @@ class _HomePageState extends State<HomePage> {
       Fluttertoast.showToast(msg: "Get raffle ticket to participate in event");
       return;
     }
-    print('HERE');
-    await LuckyDrawApiService.participateInEvent(raffleTicket);
-    Fluttertoast.showToast(msg: "Participation Successful! All the best.");
+    String response  = await LuckyDrawApiService.participateInEvent(raffleTicket);
+    Fluttertoast.showToast(msg: response);
   }
 
   _fetchEvents() async {

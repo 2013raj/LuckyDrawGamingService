@@ -36,7 +36,7 @@ class LuckyDrawApiService {
     return RaffleTicket(rid: data["rid"], uid: uid);
   }
 
-  static Future<void> participateInEvent(RaffleTicket raffleTicket) async {
+  static Future<String> participateInEvent(RaffleTicket raffleTicket) async {
     var response = await http.post(Uri.parse(API_ENDPOINT + "/participate"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -47,7 +47,7 @@ class LuckyDrawApiService {
         }));
 
     var data = await jsonDecode(response.body);
-    print(data["text"]);
+    return data["text"];
   }
 
   static Future<List<Winner>> getWinners() async {
