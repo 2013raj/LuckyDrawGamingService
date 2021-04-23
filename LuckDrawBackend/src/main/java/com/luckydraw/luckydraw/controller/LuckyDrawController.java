@@ -22,6 +22,7 @@ public class LuckyDrawController {
 	
 	@GetMapping("/")
 	public String connectionCheck(){
+		/*The following method is used to populate events table admin with event timing and prizes*/
 //		return luckyDrawService.populateEventsTable();
 		return "Welcome to Lucky Draw Gaming Service";
 	}
