@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Lucky Draw Mobile Game',
-      theme: ThemeData.dark().copyWith(
-        primaryColor: kDarkBlue,
-        scaffoldBackgroundColor: kSlightDarkBlue,
+      theme: ThemeData.light().copyWith(
+        primaryColor: kPinkish,
+        scaffoldBackgroundColor: kPeach,
         textTheme: ThemeData.light().textTheme.apply(
           fontFamily: 'NunitoSans',
         ),

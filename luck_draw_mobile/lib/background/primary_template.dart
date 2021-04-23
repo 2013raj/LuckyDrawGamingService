@@ -12,7 +12,7 @@ class PrimaryTemplate extends CustomPainter{
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color= kDarkBlue
+      ..color= kPinkish
       ..style= PaintingStyle.fill;
 
     var path = Path();

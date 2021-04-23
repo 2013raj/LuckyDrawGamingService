@@ -4,7 +4,6 @@ class Event{
   String time;
   String winner;
   String prize;
-  
-  Event({this.eid,this.date,this.prize,this.time,this.winner});
 
+  Event({this.eid,this.date,this.prize,this.time,this.winner});
 }

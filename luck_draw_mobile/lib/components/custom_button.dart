@@ -14,10 +14,10 @@ class CustomButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      color: kBrightBlue,
+      color: kReddishPink,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(text,style: TextStyle(fontSize: 16),),
+        child: Text(text,style: TextStyle(fontSize: 16,color: Colors.white),),
       ),
       onPressed: onPress,
     );
