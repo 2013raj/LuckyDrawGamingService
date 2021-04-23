@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.harchani.luck_draw_mobile">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="luck_draw_mobile"
         android:icon="@mipmap/ic_launcher">
