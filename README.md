@@ -44,3 +44,24 @@ Participate In Lucky Draw Event            |  Response
 Compute Winner [ADMIN-ONLY]           |  Response
 :-------------------------:|:-------------------------:
 ![](images/ss5.png)  |  ![](images/ss6.png)
+
+## Mobile App Screenshots
+
+Registration Page            |  Events Page | Winners Page
+:-------------------------:|:-------------------------:|:-----------------:|
+![](images/ss7.png)  |  ![](images/ss8.png) |  ![](images/ss9.png)
+
+### Technologies, Frameworks and Languages Used
+- Firebase
+- Spring Boot
+- Java
+- Flutter
+- Dart
+- Heroku
+
+The following project has tried to follow the best practices for REST API Design according to this stack-overflow [post](https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/).
+
+
+
+
+
